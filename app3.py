@@ -1,9 +1,6 @@
 from flask import Flask, request, redirect, url_for, session
-
 app = Flask(__name__)
-app.secret_key = "dev-secret"   # simple hardcoded secret key
-
-
+app.secret_key = "dev-secret"   
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -15,8 +12,6 @@ def login():
             return redirect(url_for("welcome"))
         else:
             return "Invalid credentials — try again"
-
-    # Simple login form
     return """
     <h2>Login page</h2>
     <form method="post">
@@ -25,8 +20,6 @@ def login():
       <input type="submit" value="Login">
     </form>
     """
-
-
 @app.route("/welcome")
 def welcome():
     if "user" in session:
@@ -36,8 +29,6 @@ def welcome():
         <a href="{url_for('logout')}">Logout</a>
         """
     return redirect(url_for("login"))
-
-
 @app.route("/logout")
 def logout():
     session.pop("user", None)
@@ -46,3 +37,4 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
